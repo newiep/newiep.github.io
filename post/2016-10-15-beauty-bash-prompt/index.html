@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><head>
+    <meta name="google-site-verification" content="9vIieCe-Qpd78QOmBl63rGtIVbhY6sYyuxX3j8XWBA4" />
+    <meta name="baidu-site-verification" content="LRrmH41lz7" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="记录一下如何修改终端显示样式">
+    
+    <meta name="keyword"  content="郝培文, newiep, Newiep, 郝培文的博客, Newiep&#39;s Blog, 博客, 个人网站, 互联网, Web, PHP, Go, Golang, Mysql, Redis, 微服务">
+    <link rel="shortcut icon" href="https://newiep.github.io/img/favicon.ico">
+
+    <title>让你的终端命令行提示符更漂亮-郝培文的博客 | Newiep&#39;s Blog</title>
+
+    <link rel="canonical" href="https://newiep.github.io/post/2016-10-15-beauty-bash-prompt/">
+
+    <link rel="stylesheet" href="https://newiep.github.io/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="https://newiep.github.io/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="https://newiep.github.io/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="https://newiep.github.io/css/syntax.css">
+
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    
+    <script src="https://newiep.github.io/js/jquery.min.js"></script>
+    
+    
+    <script src="https://newiep.github.io/js/bootstrap.min.js"></script>
+    
+    
+    <script src="https://newiep.github.io/js/hux-blog.min.js"></script>
+</head>
+</head>
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://newiep.github.io//">Newiep&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://newiep.github.io//">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://newiep.github.io/categories/tech">tech</a>
+                    </li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header{
+        background-image: url('https://newiep.github.io/images/home-bg-jeep.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                       
+                       <a class="tag" href="/tags/bash" title="bash">
+                           bash
+                        </a>
+                        
+                    </div>
+                    <h1>让你的终端命令行提示符更漂亮</h1>
+                    <h2 class="subheading"></h2>
+                    <span  class="meta">Posted by Newiep&#39;s Blog on Saturday, October 15, 2016
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+		
+                <header>
+                <h2>TOC</h2>
+                </header>
+                
+		
+		<p>参考来源
+<a href="https://www.digitalocean.com/community/tutorials/how-to-customize-your-bash-prompt-on-a-linux-vps">How to Customize your Bash Prompt on a Linux VPS</a> 以及 <a href="http://www.floraworley.com/posts/customize_bash_prompt/">Customize Your Bash Prompt</a></p>
+
+<blockquote>
+<p>什么会影响 bash 的命令行提示（prompt）？</p>
+</blockquote>
+
+<p><code>Bash</code> 配置它的命令行提示使用来两个环境变量 <code>PS1</code> 和 <code>PS2</code>。这里有关于<code>PS1</code>和<code>PS2</code>甚至<code>PS3</code>,<code>PS4</code>的详解<a href="http://www.thegeekstuff.com/2008/09/bash-shell-take-control-of-ps1-ps2-ps3-ps4-and-prompt_command/">Bash Shell: Take Control of PS1, PS2, PS3, PS4 and PROMPT_COMMAND</a></p>
+
+<ul>
+<li><p>简单来说<code>PS1</code>就是我们最常看到的，比如每次登陆服务器时，我们输入<code>Linux</code>命令的前缀就是<code>PS1</code>所决定的。</p></li>
+
+<li><p>而当命令太长，我们需要<code>\</code>换行来完成一条很长很长的命令时，这时候<code>PS2</code>就起作用啦！</p></li>
+</ul>
+
+<pre><code>☁  ~ ⚡  echo this is first line \
+&gt; this is second line \
+&gt; ...
+
+
+☁  ~ ⚡  echo $PS2
+&gt;
+</code></pre>
+
+<p>看到没，符号<code>&gt;</code>就是<code>PS2</code>所定义的</p>
+
+<ul>
+<li><code>PS3</code>和<code>PS4</code>请看链接了解详细使用情况</li>
+</ul>
+
+<p>知道修改哪里就好说啦！打开家目录下的<code>.bashrc</code>，找到<code>PS1</code>相关的行，</p>
+
+<pre><code># uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+force_color_prompt=yes
+
+if [ -n &quot;$force_color_prompt&quot; ]; then
+        if [ -x /usr/bin/tput ] &amp;&amp; tput setaf 1 &gt;&amp;/dev/null; then
+                # We have color support; assume it's compliant with Ecma-48
+                # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+                # a case would tend to support setf rather than setaf.)
+                color_prompt=yes
+        else
+                color_prompt=
+        fi
+fi
+
+if [ &quot;$color_prompt&quot; = yes ]; then
+        PS1='\[\033[1;36m\]☁  \[\033[1;32m\]\W \[\033[1;36m\]$(parse_git_branch)\]⚡  \[\033[0;37m\]'
+else
+        PS1='☁ \W ⚡ '
+fi
+
+    # This function lets us know which branch we are on when working in a local repo:
+    parse_git_branch(){
+    git branch 2&gt; /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
+}
+
+unset color_prompt force_color_prompt
+</code></pre>
+
+<p>起关键作用的就是这里啦。首先先注释掉<code>force_color_prompt=yes</code>前面的<code>#</code>号，让我们的客户端有颜色。解释一下<code>PS1</code>的值代表什么意思：</p>
+
+<ul>
+<li><code>\[\033[1;36m\]</code>表示一种颜色，会对后面的产生影响，颜色符号对照表看下面。其中<code>\033</code>是固定值，用来告诉<code>bash</code>使用八进制的<code>ASCI</code>码值来表示颜色。后面的<code>1;36m</code>分两部分，<code>1:加粗高亮</code>，对应的还有<code>0:普通的文字</code>，<code>4:下划线</code>。<code>36</code>就是对应的颜色码值了，它代表<code>Cyan 蓝绿色</code>。（<code>m</code>表示什么暂时不知道了）下面还有其他的颜色码值：</li>
+</ul>
+
+<pre><code>Bash Color Codes:
+
+30: Black
+31: Red
+32: Green
+33: Yellow
+34: Blue
+35: Purple
+36: Cyan
+37: White
+</code></pre>
+
+<ul>
+<li><p>后面的 ☁ 会在客户端显示一个云的标志（目前只在mac下测试过，不知道对window支持的怎么样），紧接着又是一个颜色的符号，它表示<code>淡绿色</code></p></li>
+
+<li><p><code>\W</code>表示当前目录名，对应的是<code>\w</code>表示当前目录全路径，下面还有其他一些符号表示：</p></li>
+</ul>
+
+<pre><code>Bash variables: 
+\a : an ASCII bell character (07) 
+\d : the date in &quot;Weekday Month Date&quot; format (e.g., &quot;Tue May 26&quot;) 
+\D{format} : the format is passed to strftime(3) and the result is inserted into the prompt string; an empty format results in a locale-specific time representation. The braces are required 
+\e : an ASCII escape character (033) 
+\h : the hostname up to the first '.' 
+\H : the hostname 
+\j : the number of jobs currently managed by the shell 
+\l : the basename of the shell’s terminal device name 
+\n : newline 
+\r : carriage return 
+\s : the name of the shell, the basename of $0 (the portion following the final slash) 
+\t : the current time in 24-hour HH:MM:SS format 
+\T : the current time in 12-hour HH:MM:SS format 
+\@ : the current time in 12-hour am/pm format 
+\A : the current time in 24-hour HH:MM format 
+\u : the username of the current user 
+\v : the version of bash (e.g., 2.00) 
+\V : the release of bash, version + patch level (e.g., 2.00.0) 
+\w : the current working directory, with $HOME abbreviated with a tilde 
+\W : the basename of the current working directory, with $HOME abbreviated with a tilde 
+! : the history number of this command 
+# : the command number of this command 
+\$ : if the effective UID is 0, a #, otherwise a $ 
+\nnn : the character corresponding to the octal number nnn 
+\ : a backslash 
+[ : begin a sequence of non-printing characters, which could be used to embed a terminal control sequence into the prompt 
+] : end a sequence of non-printing characters
+</code></pre>
+
+<ul>
+<li>后面比较特殊的就是<code>$(parse_git_branch)</code>，因为我在下面定义了一个方法，用来获取当前git的分支名称，这里就是调用这个方法，把分支名称显示到当前命令行提示符中。</li>
+</ul>
+
+<pre><code># This function lets us know which branch we are on when working in a local repo:
+parse_git_branch(){
+            git branch 2&gt; /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
+    }
+</code></pre>
+
+<p>上面的就是我的配置，效果大概是下面这个样子的</p>
+
+<p><img src="/storage/giFwXT23eK.png" alt="" /></p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/2016-10-26-two-linux-command-alternative-phpmod/" data-toggle="tooltip" data-placement="top" title="两个方便的命令（update-alternative 和 phpenmod/phpdismod）">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/2016-10-15-bash-command-source/" data-toggle="tooltip" data-placement="top" title="source script.sh 和 ./script.sh 执行脚本有什么区别？">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                     
+                    
+                        
+                            <a href="/tags/bash" title="bash">
+                                bash
+                            </a>
+                        
+                    
+                        
+                            <a href="/tags/php" title="php">
+                                php
+                            </a>
+                        
+                    
+                        
+                            <a href="/tags/timezone" title="timezone">
+                                timezone
+                            </a>
+                        
+                    
+                        
+                            <a href="/tags/ubuntu" title="ubuntu">
+                                ubuntu
+                            </a>
+                        
+                    
+                        
+                            <a href="/tags/vagrant" title="vagrant">
+                                vagrant
+                            </a>
+                        
+                    
+                        
+                            <a href="/tags/vim" title="vim">
+                                vim
+                            </a>
+                        
+                    
+                    </div>
+                </section>
+
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href="" rel="alternate" type="application/rss+xml" title="Newiep&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:haopeiwen123@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    <li>
+                        <a href="https://twitter.com/newiep_H">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://newiep.github.io/images/WechatIMG.jpeg">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/newiep">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Newiep&#39;s Blog , 2016
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https'){
+       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else{
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

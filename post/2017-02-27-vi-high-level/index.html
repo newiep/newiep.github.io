@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><head>
+    <meta name="google-site-verification" content="9vIieCe-Qpd78QOmBl63rGtIVbhY6sYyuxX3j8XWBA4" />
+    <meta name="baidu-site-verification" content="LRrmH41lz7" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="记录 vi 一些常用的提升编辑效率的常用命令">
+    
+    <meta name="keyword"  content="郝培文, newiep, Newiep, 郝培文的博客, Newiep&#39;s Blog, 博客, 个人网站, 互联网, Web, PHP, Go, Golang, Mysql, Redis, 微服务">
+    <link rel="shortcut icon" href="https://newiep.github.io/img/favicon.ico">
+
+    <title>提升你的编辑效率--vi-郝培文的博客 | Newiep&#39;s Blog</title>
+
+    <link rel="canonical" href="https://newiep.github.io/post/2017-02-27-vi-high-level/">
+
+    <link rel="stylesheet" href="https://newiep.github.io/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="https://newiep.github.io/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="https://newiep.github.io/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="https://newiep.github.io/css/syntax.css">
+
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    
+    <script src="https://newiep.github.io/js/jquery.min.js"></script>
+    
+    
+    <script src="https://newiep.github.io/js/bootstrap.min.js"></script>
+    
+    
+    <script src="https://newiep.github.io/js/hux-blog.min.js"></script>
+</head>
+</head>
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://newiep.github.io//">Newiep&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://newiep.github.io//">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://newiep.github.io/categories/tech">tech</a>
+                    </li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header{
+        background-image: url('https://newiep.github.io/images/home-bg-jeep.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                       
+                       <a class="tag" href="/tags/vim" title="vim">
+                           vim
+                        </a>
+                        
+                    </div>
+                    <h1>提升你的编辑效率--vi</h1>
+                    <h2 class="subheading"></h2>
+                    <span  class="meta">Posted by Newiep&#39;s Blog on Monday, February 27, 2017
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+		
+                <header>
+                <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#常用插入模式">常用插入模式</a></li>
+<li><a href="#移动命令">移动命令</a></li>
+<li><a href="#特殊命令">特殊命令</a></li>
+<li><a href="#宏录制">宏录制</a></li>
+<li><a href="#visual-block-列操作">visual block 列操作</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+		
+		
+
+<h3 id="常用插入模式">常用插入模式</h3>
+
+<ul>
+<li><code>a</code>  在当前位置后一个字符处进行插入</li>
+<li><code>A</code>  在当前行尾的处进行插入</li>
+<li><code>i</code>    在当前位置前一个字符处进行插入</li>
+<li><code>I</code>    在当前行首的位置进行插入</li>
+<li><code>r</code>   当前位置进行替换</li>
+<li><code>o</code>  在当前行后插入一个新行</li>
+<li><code>O</code>  在当前行前插入一个新行</li>
+<li><code>C</code>  删除从当前位置到行尾内容</li>
+<li><code>S</code> 或 <code>cc</code>  删除当前行内容并进入插入模式</li>
+</ul>
+
+<h3 id="移动命令">移动命令</h3>
+
+<ul>
+<li><code>hjkl</code>   前，下，上，右</li>
+<li><code>^</code>  移动到行首，<code>数字0</code> 到行头</li>
+<li><code>$</code> 移动到行尾</li>
+<li><code>gg</code> 移动到第一行， <code>NG</code> 移动到第 N 行，  <code>G</code> 移动到最后一行</li>
+<li><code>w</code> 移动到下一个单词开头  <code>b</code> 移动到下一个单词结尾（如果已 blank 字符作为分割，使用大写的<code>WE</code>）</li>
+<li><code>%</code> 匹配括号移动，包括<code>(</code>， <code>[</code>，  <code>{</code>  （需要把光标先移到括号上）</li>
+<li><code>*</code>(<code>#</code>)    移动到<code>下</code>(<code>上</code>)下一个当前光标所在的单词</li>
+<li><code>f{char}</code>    查找并移动到下一个{char}字符位置</li>
+<li><code>;</code>  重复上一个查找动作</li>
+</ul>
+
+<h3 id="特殊命令">特殊命令</h3>
+
+<ul>
+<li><code>gU(u)</code> 变大(小)写，需要接一个范围，比如，<code>gUl</code> 大写当前字符， <code>guu</code> 当前行全部变小写  <code>gUw</code>  当前位置到改单词末尾变为大写</li>
+<li><code>v</code> visual 模式 ，  <code>V</code> visual line 模式，  <code>ctrl + v</code>  区块（visual block）模式，也可以理解为<code>列模式</code></li>
+<li><code>qa</code> 开始录制    <code>q</code> 退出录制
+<img src="/storage/vi-recording-visualblock-example.gif" alt="vi-recording-visualblock-example.gif" /></li>
+</ul>
+
+<p>上面演示了使用<code>录制功能</code>和 <code>visual block</code> 的示例。
+具体操作：</p>
+
+<h3 id="宏录制">宏录制</h3>
+
+<ol>
+<li><code>qa</code> 开启录制</li>
+<li><code>Yp</code> 复制当前有数字1的行并粘贴</li>
+<li><code>ctrl + a</code> 当前数字 +1</li>
+<li><code>q</code> 停止录制</li>
+<li><code>@a</code> replay被录制的宏</li>
+<li><code>@@</code> replay最新录制的宏</li>
+<li><code>6@@</code> replay 6次</li>
+</ol>
+
+<h3 id="visual-block-列操作">visual block 列操作</h3>
+
+<ol>
+<li><code>ctrl + v</code> 开始列操作, <code>G</code> 选中到最后一行</li>
+<li><code>I ，</code> 在选中的列前开始插入 <code>,</code></li>
+<li><code>ESC</code> 执行，为10行全部插入 <code>,</code></li>
+<li><code>V</code> 开启 visual 模式，<code>G</code> 选中到最后一列</li>
+<li><code>J</code> 把所有行连接到一起</li>
+</ol>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/post/2016-10-26-modify-time-in-ubuntu/" data-toggle="tooltip" data-placement="top" title="ubuntu 修改时区，更新时间">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                     
+                    
+                        
+                            <a href="/tags/bash" title="bash">
+                                bash
+                            </a>
+                        
+                    
+                        
+                            <a href="/tags/php" title="php">
+                                php
+                            </a>
+                        
+                    
+                        
+                            <a href="/tags/timezone" title="timezone">
+                                timezone
+                            </a>
+                        
+                    
+                        
+                            <a href="/tags/ubuntu" title="ubuntu">
+                                ubuntu
+                            </a>
+                        
+                    
+                        
+                            <a href="/tags/vagrant" title="vagrant">
+                                vagrant
+                            </a>
+                        
+                    
+                        
+                            <a href="/tags/vim" title="vim">
+                                vim
+                            </a>
+                        
+                    
+                    </div>
+                </section>
+
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href="" rel="alternate" type="application/rss+xml" title="Newiep&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:haopeiwen123@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    <li>
+                        <a href="https://twitter.com/newiep_H">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://newiep.github.io/images/WechatIMG.jpeg">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/newiep">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Newiep&#39;s Blog , 2017
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https'){
+       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else{
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

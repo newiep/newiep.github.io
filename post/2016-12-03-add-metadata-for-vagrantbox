@@ -1,0 +1,38 @@
+---
+layout:      post
+title:       "给自己制作的vagrant box 添加一个版本"
+subtitle:    ""
+description: "自己制作的 vagrant box，在执行`vagrant add box` 命令后是没有版本信息的（包括手动下载的官方的 box ），需要手动给 box 添加版本信息，本文介绍如何添加！"
+date:        2016-12-03 10:36:00
+image:       ""
+tags:        ["vagrant"]
+categories:  ["Tech"]
+---
+
+
+自己制作的 vagrant box，在执行`vagrant add box` 命令后是没有版本信息的（包括手动下载的官方的 box ），怎么才能给box 加上版本号呐！
+
+[问题来源 Box 'laravel/homestead' could not be found](http://stackoverflow.com/questions/34946837/box-laravel-homestead-could-not-be-found)
+
+编辑 metadata.json （这个文件放在box同一目录下）
+```
+{
+    "name": "laravel/homestead",
+    "versions": [{
+        "version": "0.4.4",   //注意替换成你的版本
+        "providers": [{
+            "name": "virtualbox",
+            "url": "file://homestead.box"   //注意替换成你的box的文件名
+        }]
+    }]
+}
+```
+
+然后执行
+```
+$ vagrant box add metadata.json
+$ vagrant box list
+laravel/homestead               (virtualbox, 0.4.4)
+```
+
+搞定～～～

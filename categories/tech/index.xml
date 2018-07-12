@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tech on Newiep&#39;s Blog</title>
+    <link>https://newiep.github.io/categories/tech/</link>
+    <description>Recent content in Tech on Newiep&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 27 Feb 2017 20:55:05 +0000</lastBuildDate>
+    
+	<atom:link href="https://newiep.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>提升你的编辑效率--vi</title>
+      <link>https://newiep.github.io/post/2017-02-27-vi-high-level/</link>
+      <pubDate>Mon, 27 Feb 2017 20:55:05 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2017-02-27-vi-high-level/</guid>
+      <description>常用插入模式  a 在当前位置后一个字符处进行插入 A 在当前行尾的处进行插入 i 在当前位置前一个字符处进行插入 I 在当前行首的位置进行插入 r 当前位置进行替换 o 在当前行后插入一个新行 O 在当前行前插入一个新行 C 删除从当前位置到行尾内容 S 或 cc 删除当前行内容并进入插入模式  移动命令  hjkl 前，下，上，右 ^ 移动到行首，数字0 到行头 $ 移动到行尾 gg 移动到第一行， NG 移动到第 N 行， G 移动到最后一行 w 移动到下一个单词开头 b 移动到下一个单词结尾（如果已 blank 字符作为分割，使用大写的WE） % 匹配括号移动，包括(， [， { （需要把光标先移到括号上） *(#) 移动到下(上)下一个当前光标所在的单词 f{char} 查找并移动到下一个{char}字符位置 ; 重复上一个查找动作  特殊命令  gU(u) 变大(小)写，需要接一个范围，比如，gUl 大写当前字符， guu 当前行全部变小写 gUw 当前位置到改单词末尾变为大写 v visual 模式 ， V visual line 模式， ctrl + v 区块（visual block）模式，也可以理解为列模式 qa 开始录制 q 退出录制   上面演示了使用录制功能和 visual block 的示例。 具体操作：</description>
+    </item>
+    
+    <item>
+      <title>ubuntu 修改时区，更新时间</title>
+      <link>https://newiep.github.io/post/2016-10-26-modify-time-in-ubuntu/</link>
+      <pubDate>Wed, 26 Oct 2016 08:36:00 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2016-10-26-modify-time-in-ubuntu/</guid>
+      <description>  修改时区文件
+sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  同步时间
+sudo ntpdate cn.pool.ntp.org  写入硬件
+sudo hwclock --systohc   如果提示命令 ntpdate 不存在，安装命令 sudo apt-get install ntpdate </description>
+    </item>
+    
+    <item>
+      <title>两个方便的命令（update-alternative 和 phpenmod/phpdismod）</title>
+      <link>https://newiep.github.io/post/2016-10-26-two-linux-command-alternative-phpmod/</link>
+      <pubDate>Wed, 26 Oct 2016 07:36:00 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2016-10-26-two-linux-command-alternative-phpmod/</guid>
+      <description>记录两个有用的命令：update-alternative 和 phpenmod(phpdismod)
+ update-alternative 管理程序版本 例如你的开发环境有多个 php 版本，使用这个命令可以非常方便的切换当前 php 的版本，语法：sudo update-alternatives --set php /usr/bin/php5.6 这样就切换到 5.6 版本啦。
+ phpenmod(phpdismod) 管理 PHP 拓展
+  usage: phpenmod(phpdismod) [ -v ALL|php_version ] [ -s ALL|sapi_name ] module_name [ module_name_2 ]  这两个可以看作一个命令，一个用来开启拓展，另一个用来关闭拓展， 语法：sudo phpenmod bcmath 这样，php-fpm 和 php-cli 会同时启用 bcmath 拓展。
+如果想只启用一端，也可以这样：sudo phpdismod -s cli xdebug 这样，php-cli 就会关闭 xdebug 拓展而不影响 php-fpm 使用该拓展。</description>
+    </item>
+    
+    <item>
+      <title>让你的终端命令行提示符更漂亮</title>
+      <link>https://newiep.github.io/post/2016-10-15-beauty-bash-prompt/</link>
+      <pubDate>Sat, 15 Oct 2016 14:51:00 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2016-10-15-beauty-bash-prompt/</guid>
+      <description>参考来源 How to Customize your Bash Prompt on a Linux VPS 以及 Customize Your Bash Prompt
+ 什么会影响 bash 的命令行提示（prompt）？
+ Bash 配置它的命令行提示使用来两个环境变量 PS1 和 PS2。这里有关于PS1和PS2甚至PS3,PS4的详解Bash Shell: Take Control of PS1, PS2, PS3, PS4 and PROMPT_COMMAND
+ 简单来说PS1就是我们最常看到的，比如每次登陆服务器时，我们输入Linux命令的前缀就是PS1所决定的。
+ 而当命令太长，我们需要\换行来完成一条很长很长的命令时，这时候PS2就起作用啦！
+  ☁ ~ ⚡ echo this is first line \ &amp;gt; this is second line \ &amp;gt; ... ☁ ~ ⚡ echo $PS2 &amp;gt;  看到没，符号&amp;gt;就是PS2所定义的
+ PS3和PS4请看链接了解详细使用情况  知道修改哪里就好说啦！打开家目录下的.</description>
+    </item>
+    
+    <item>
+      <title>source script.sh 和 ./script.sh 执行脚本有什么区别？</title>
+      <link>https://newiep.github.io/post/2016-10-15-bash-command-source/</link>
+      <pubDate>Sat, 15 Oct 2016 07:49:00 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2016-10-15-bash-command-source/</guid>
+      <description>source script.sh 和 ./script.sh 执行脚本有什么区别？
+ 这里有一个回答 What is the difference between executing a bash script and sourcing a bash script? 很详细，简单总结一下：
+ source script.sh 会在当前 shell 进程（当前环境上下文）执行，而./script.sh 则会新开一个 shell 进程来执行。举个例子：
+ 假设有以下的脚本pid.sh ：
+#!/bin/sh echo $$   $$会打印当前 shell进程的 pid
+ # 先手动执行一下，看输出结果 $ echo $$ 25009 # 使用 source 的方法执行， $ source pid.sh 25009 # 直接执行 pid.sh， $ ./pid.sh 25011 # 重新使用 source 的方法， $ source pid.</description>
+    </item>
+    
+    <item>
+      <title>使用 vagrant 快速搭建 php 开发环境</title>
+      <link>https://newiep.github.io/post/2016-10-15-development-environment-by-vagrant/</link>
+      <pubDate>Sat, 15 Oct 2016 07:36:00 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2016-10-15-development-environment-by-vagrant/</guid>
+      <description>准备工作 安装 vagrant 下载 vagrant 官网地址 并安装
+安装 virtual box 下载 VirtualBox 官网地址 并安装
+克隆仓库到本地 git clone git@github.com:newiep/workstation.git vagrant cd vagrant  开始搭建 添加 box 到 vagrant vagrant box add metadata.json   我已经把准备好的环境打包并上传到七牛，上面的命令会从七牛下载 box 文件并添加到 vagrant， 中间可能会等待一些时间
+ 查看是否已经添加成功 vagrant box list  如果看到 newiep/workstation (virtualbox, 0.0.1) 的列表，证明添加成功
+启动环境 vagrant up  耐心等环境启动完毕就可以了，然后可以用 vagrant ssh 进入到虚拟机里，happy coding ^_^</description>
+    </item>
+    
+  </channel>
+</rss>

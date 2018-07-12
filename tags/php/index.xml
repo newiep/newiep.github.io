@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Php on Newiep&#39;s Blog</title>
+    <link>https://newiep.github.io/tags/php/</link>
+    <description>Recent content in Php on Newiep&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Oct 2016 07:36:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://newiep.github.io/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>两个方便的命令（update-alternative 和 phpenmod/phpdismod）</title>
+      <link>https://newiep.github.io/post/2016-10-26-two-linux-command-alternative-phpmod/</link>
+      <pubDate>Wed, 26 Oct 2016 07:36:00 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2016-10-26-two-linux-command-alternative-phpmod/</guid>
+      <description>记录两个有用的命令：update-alternative 和 phpenmod(phpdismod)
+ update-alternative 管理程序版本 例如你的开发环境有多个 php 版本，使用这个命令可以非常方便的切换当前 php 的版本，语法：sudo update-alternatives --set php /usr/bin/php5.6 这样就切换到 5.6 版本啦。
+ phpenmod(phpdismod) 管理 PHP 拓展
+  usage: phpenmod(phpdismod) [ -v ALL|php_version ] [ -s ALL|sapi_name ] module_name [ module_name_2 ]  这两个可以看作一个命令，一个用来开启拓展，另一个用来关闭拓展， 语法：sudo phpenmod bcmath 这样，php-fpm 和 php-cli 会同时启用 bcmath 拓展。
+如果想只启用一端，也可以这样：sudo phpdismod -s cli xdebug 这样，php-cli 就会关闭 xdebug 拓展而不影响 php-fpm 使用该拓展。</description>
+    </item>
+    
+    <item>
+      <title>使用 vagrant 快速搭建 php 开发环境</title>
+      <link>https://newiep.github.io/post/2016-10-15-development-environment-by-vagrant/</link>
+      <pubDate>Sat, 15 Oct 2016 07:36:00 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2016-10-15-development-environment-by-vagrant/</guid>
+      <description>准备工作 安装 vagrant 下载 vagrant 官网地址 并安装
+安装 virtual box 下载 VirtualBox 官网地址 并安装
+克隆仓库到本地 git clone git@github.com:newiep/workstation.git vagrant cd vagrant  开始搭建 添加 box 到 vagrant vagrant box add metadata.json   我已经把准备好的环境打包并上传到七牛，上面的命令会从七牛下载 box 文件并添加到 vagrant， 中间可能会等待一些时间
+ 查看是否已经添加成功 vagrant box list  如果看到 newiep/workstation (virtualbox, 0.0.1) 的列表，证明添加成功
+启动环境 vagrant up  耐心等环境启动完毕就可以了，然后可以用 vagrant ssh 进入到虚拟机里，happy coding ^_^</description>
+    </item>
+    
+  </channel>
+</rss>
