@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Php on Newiep&#39;s Blog</title>
+    <title>Php on 郝培文的博客 - Newiep&#39;s 脑容量拓展</title>
     <link>https://newiep.github.io/tags/php/</link>
-    <description>Recent content in Php on Newiep&#39;s Blog</description>
+    <description>Recent content in Php on 郝培文的博客 - Newiep&#39;s 脑容量拓展</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 13 Jul 2017 20:55:05 +0000</lastBuildDate>
+    <language>en</language>
+    <lastBuildDate>Thu, 13 Jul 2017 21:00:05 +0000</lastBuildDate>
     
 	<atom:link href="https://newiep.github.io/tags/php/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>成为高级 PHP 程序员的第一步——调试（xdebug 配置篇）</title>
+      <link>https://newiep.github.io/post/2017-07-13-debug-practice-for-php/</link>
+      <pubDate>Thu, 13 Jul 2017 21:00:05 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2017-07-13-debug-practice-for-php/</guid>
+      <description>上一篇 成为高级 PHP 程序员的第一步——调试（xdebug 原理篇），介绍了一下 xdebug 工作原理，明白了工作原理，对我们接下来的配置应该就是信手拈来，就算</description>
+    </item>
     
     <item>
       <title>成为高级 PHP 程序员的第一步——调试（xdebug 原理篇）</title>
@@ -17,10 +26,7 @@
       <pubDate>Thu, 13 Jul 2017 20:55:05 +0000</pubDate>
       
       <guid>https://newiep.github.io/post/2017-07-13-debug-principle-for-php/</guid>
-      <description>文章参考：Xdebug工作原理 xdebug 对于许多 phper 应该一点也不陌生。说来惭愧，对于常年使用 var_dump，echo，现在又多了一个dd :sweat_smile: ，来调试程序的猿来说，这种方式实在有点过时。今天花了一些时间好好了解了一下，现在就整理一下这款，能提升你调试效率以及逼格满满的调试利器———— xdebug
-先讲一下 xdebug 工作原理，总结为下面几个步骤：  IDE（比如 PhpStorm ，下文所述的客户端）中已经集成了一个遵循 BGDp 的 Xdebug 插件。当要 debug 的时候，点击一些 IDE 的某个按钮，启动这个插件。该插件会启动一个 9000 的端口监听远程服务器发过来的 debug 信息。 &amp;gt; phpstorm 中，开启 / 关闭的位置为：工具栏 &amp;gt; Run &amp;gt; Start / Stop Listening for PHP Xdebug Connetions
- 浏览器向 Httpd 服务器发送一个带有 XDEBUG_SESSION_START 参数的请求，服务器收到这个请求之后交给后端的PHP（已开启 xdebug 模块）进行处理。
- Php 看到这个请求是带了 XDEBUG_SESSION_START 参数，就告诉 Xdebug，“嘿，我要debug喔，你准备一下”。这时，Xdebug 会向来源 ip 客户端的9000端口（默认是 9000 端口）发送一个debug请求，然后客户端的 9000 端口响应这个请求，那么 debug 就开始了。 &amp;gt; 这里通知客户端其实有两种方式，根据 xdebug 的配置 xdebug.</description>
+      <description>文章参考：Xdebug工作原理 xdebug 对于许多 phper 应该一点也不陌生。说来惭愧，对于常年使用 var_dump，echo，现在又多了一个dd 😅 ，来调试程</description>
     </item>
     
     <item>
@@ -29,11 +35,7 @@
       <pubDate>Wed, 26 Oct 2016 07:36:00 +0000</pubDate>
       
       <guid>https://newiep.github.io/post/2016-10-26-two-linux-command-alternative-phpmod/</guid>
-      <description>记录两个有用的命令：update-alternative 和 phpenmod(phpdismod)
- update-alternative 管理程序版本 例如你的开发环境有多个 php 版本，使用这个命令可以非常方便的切换当前 php 的版本，语法：sudo update-alternatives --set php /usr/bin/php5.6 这样就切换到 5.6 版本啦。
- phpenmod(phpdismod) 管理 PHP 拓展
-  usage: phpenmod(phpdismod) [ -v ALL|php_version ] [ -s ALL|sapi_name ] module_name [ module_name_2 ]  这两个可以看作一个命令，一个用来开启拓展，另一个用来关闭拓展， 语法：sudo phpenmod bcmath 这样，php-fpm 和 php-cli 会同时启用 bcmath 拓展。
-如果想只启用一端，也可以这样：sudo phpdismod -s cli xdebug 这样，php-cli 就会关闭 xdebug 拓展而不影响 php-fpm 使用该拓展。</description>
+      <description>记录两个有用的命令：update-alternative 和 phpenmod(phpdismod) update-alternative 管理程序版本 例如你的开发环境有多个 php 版本，使用这个命令可以非常方便的切换当前 php</description>
     </item>
     
     <item>
@@ -42,11 +44,7 @@
       <pubDate>Sat, 15 Oct 2016 07:36:00 +0000</pubDate>
       
       <guid>https://newiep.github.io/post/2016-10-15-development-environment-by-vagrant/</guid>
-      <description>准备工作 安装 vagrant 下载 vagrant 官网地址 并安装
-安装 virtual box 下载 VirtualBox 官网地址 并安装
-克隆仓库到本地 git clone git@github.com:newiep/workstation.git vagrant cd vagrant  开始搭建 添加 box 到 vagrant vagrant box add metadata.json   我已经把准备好的环境打包并上传到七牛，上面的命令会从七牛下载 box 文件并添加到 vagrant， 中间可能会等待一些时间
- 查看是否已经添加成功 vagrant box list  如果看到 newiep/workstation (virtualbox, 0.0.1) 的列表，证明添加成功
-启动环境 vagrant up  耐心等环境启动完毕就可以了，然后可以用 vagrant ssh 进入到虚拟机里，happy coding ^_^</description>
+      <description>准备工作 安装 vagrant 下载 vagrant 官网地址 并安装 安装 virtual box 下载 VirtualBox 官网地址 并安装 克隆仓库到本地 git clone git@github.com:newiep/workstation.git vagrant cd vagrant 开始搭建 添加 box 到 vagrant vagrant box add metadata.json 我已经把准备好的环境打包并</description>
     </item>
     
   </channel>

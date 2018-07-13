@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Vim on Newiep&#39;s Blog</title>
+    <title>Vim on 郝培文的博客 - Newiep&#39;s 脑容量拓展</title>
     <link>https://newiep.github.io/tags/vim/</link>
-    <description>Recent content in Vim on Newiep&#39;s Blog</description>
+    <description>Recent content in Vim on 郝培文的博客 - Newiep&#39;s 脑容量拓展</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Mon, 27 Feb 2017 20:55:05 +0000</lastBuildDate>
     
 	<atom:link href="https://newiep.github.io/tags/vim/index.xml" rel="self" type="application/rss+xml" />
@@ -17,7 +17,7 @@
       <pubDate>Mon, 27 Feb 2017 20:55:05 +0000</pubDate>
       
       <guid>https://newiep.github.io/post/2017-02-27-vi-high-level/</guid>
-      <description>常用插入模式  a 在当前位置后一个字符处进行插入 A 在当前行尾的处进行插入 i 在当前位置前一个字符处进行插入 I 在当前行首的位置进行插入 r 当前位置进行替换 o 在当前行后插入一个新行 O 在当前行前插入一个新行 C 删除从当前位置到行尾内容 S 或 cc 删除当前行内容并进入插入模式  移动命令  hjkl 前，下，上，右 ^ 移动到行首，数字0 到行头 $ 移动到行尾 gg 移动到第一行， NG 移动到第 N 行， G 移动到最后一行 w 移动到下一个单词开头 b 移动到下一个单词结尾（如果已 blank 字符作为分割，使用大写的WE） % 匹配括号移动，包括(， [， { （需要把光标先移到括号上） *(#) 移动到下(上)下一个当前光标所在的单词 f{char} 查找并移动到下一个{char}字符位置 ; 重复上一个查找动作  特殊命令  gU(u) 变大(小)写，需要接一个范围，比如，gUl 大写当前字符， guu 当前行全部变小写 gUw 当前位置到改单词末尾变为大写 v visual 模式 ， V visual line 模式， ctrl + v 区块（visual block）模式，也可以理解为列模式 qa 开始录制 q 退出录制   上面演示了使用录制功能和 visual block 的示例。 具体操作：</description>
+      <description>常用插入模式 a 在当前位置后一个字符处进行插入 A 在当前行尾的处进行插入 i 在当前位置前一个字符处进行插入 I 在当前行首的位置进行插入 r 当前位置进行</description>
     </item>
     
   </channel>

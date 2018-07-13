@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Ubuntu on Newiep&#39;s Blog</title>
+    <title>Ubuntu on 郝培文的博客 - Newiep&#39;s 脑容量拓展</title>
     <link>https://newiep.github.io/tags/ubuntu/</link>
-    <description>Recent content in Ubuntu on Newiep&#39;s Blog</description>
+    <description>Recent content in Ubuntu on 郝培文的博客 - Newiep&#39;s 脑容量拓展</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Wed, 26 Oct 2016 08:36:00 +0000</lastBuildDate>
     
 	<atom:link href="https://newiep.github.io/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
@@ -17,10 +17,7 @@
       <pubDate>Wed, 26 Oct 2016 08:36:00 +0000</pubDate>
       
       <guid>https://newiep.github.io/post/2016-10-26-modify-time-in-ubuntu/</guid>
-      <description>  修改时区文件
-sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  同步时间
-sudo ntpdate cn.pool.ntp.org  写入硬件
-sudo hwclock --systohc   如果提示命令 ntpdate 不存在，安装命令 sudo apt-get install ntpdate </description>
+      <description>修改时区文件 sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime 同步时间 sudo ntpdate cn.pool.ntp.org 写入硬件 sudo hwclock --systohc 如果提示命令 ntpdate 不存在，安装命令 sudo apt-get install ntpdate</description>
     </item>
     
     <item>
@@ -29,11 +26,7 @@ sudo hwclock --systohc   如果提示命令 ntpdate 不存在，安装命令 sud
       <pubDate>Wed, 26 Oct 2016 07:36:00 +0000</pubDate>
       
       <guid>https://newiep.github.io/post/2016-10-26-two-linux-command-alternative-phpmod/</guid>
-      <description>记录两个有用的命令：update-alternative 和 phpenmod(phpdismod)
- update-alternative 管理程序版本 例如你的开发环境有多个 php 版本，使用这个命令可以非常方便的切换当前 php 的版本，语法：sudo update-alternatives --set php /usr/bin/php5.6 这样就切换到 5.6 版本啦。
- phpenmod(phpdismod) 管理 PHP 拓展
-  usage: phpenmod(phpdismod) [ -v ALL|php_version ] [ -s ALL|sapi_name ] module_name [ module_name_2 ]  这两个可以看作一个命令，一个用来开启拓展，另一个用来关闭拓展， 语法：sudo phpenmod bcmath 这样，php-fpm 和 php-cli 会同时启用 bcmath 拓展。
-如果想只启用一端，也可以这样：sudo phpdismod -s cli xdebug 这样，php-cli 就会关闭 xdebug 拓展而不影响 php-fpm 使用该拓展。</description>
+      <description>记录两个有用的命令：update-alternative 和 phpenmod(phpdismod) update-alternative 管理程序版本 例如你的开发环境有多个 php 版本，使用这个命令可以非常方便的切换当前 php</description>
     </item>
     
   </channel>

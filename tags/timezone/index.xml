@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Timezone on Newiep&#39;s Blog</title>
+    <title>Timezone on 郝培文的博客 - Newiep&#39;s 脑容量拓展</title>
     <link>https://newiep.github.io/tags/timezone/</link>
-    <description>Recent content in Timezone on Newiep&#39;s Blog</description>
+    <description>Recent content in Timezone on 郝培文的博客 - Newiep&#39;s 脑容量拓展</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Wed, 26 Oct 2016 08:36:00 +0000</lastBuildDate>
     
 	<atom:link href="https://newiep.github.io/tags/timezone/index.xml" rel="self" type="application/rss+xml" />
@@ -17,10 +17,7 @@
       <pubDate>Wed, 26 Oct 2016 08:36:00 +0000</pubDate>
       
       <guid>https://newiep.github.io/post/2016-10-26-modify-time-in-ubuntu/</guid>
-      <description>  修改时区文件
-sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  同步时间
-sudo ntpdate cn.pool.ntp.org  写入硬件
-sudo hwclock --systohc   如果提示命令 ntpdate 不存在，安装命令 sudo apt-get install ntpdate </description>
+      <description>修改时区文件 sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime 同步时间 sudo ntpdate cn.pool.ntp.org 写入硬件 sudo hwclock --systohc 如果提示命令 ntpdate 不存在，安装命令 sudo apt-get install ntpdate</description>
     </item>
     
   </channel>
