@@ -6,10 +6,22 @@
     <description>Recent content on Newiep&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Feb 2017 20:55:05 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Jul 2017 20:55:05 +0000</lastBuildDate>
     
 	<atom:link href="https://newiep.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>成为高级 PHP 程序员的第一步——调试（xdebug 原理篇）</title>
+      <link>https://newiep.github.io/post/2017-07-13-debug-principle-for-php/</link>
+      <pubDate>Thu, 13 Jul 2017 20:55:05 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2017-07-13-debug-principle-for-php/</guid>
+      <description>文章参考：Xdebug工作原理 xdebug 对于许多 phper 应该一点也不陌生。说来惭愧，对于常年使用 var_dump，echo，现在又多了一个dd :sweat_smile: ，来调试程序的猿来说，这种方式实在有点过时。今天花了一些时间好好了解了一下，现在就整理一下这款，能提升你调试效率以及逼格满满的调试利器———— xdebug
+先讲一下 xdebug 工作原理，总结为下面几个步骤：  IDE（比如 PhpStorm ，下文所述的客户端）中已经集成了一个遵循 BGDp 的 Xdebug 插件。当要 debug 的时候，点击一些 IDE 的某个按钮，启动这个插件。该插件会启动一个 9000 的端口监听远程服务器发过来的 debug 信息。 &amp;gt; phpstorm 中，开启 / 关闭的位置为：工具栏 &amp;gt; Run &amp;gt; Start / Stop Listening for PHP Xdebug Connetions
+ 浏览器向 Httpd 服务器发送一个带有 XDEBUG_SESSION_START 参数的请求，服务器收到这个请求之后交给后端的PHP（已开启 xdebug 模块）进行处理。
+ Php 看到这个请求是带了 XDEBUG_SESSION_START 参数，就告诉 Xdebug，“嘿，我要debug喔，你准备一下”。这时，Xdebug 会向来源 ip 客户端的9000端口（默认是 9000 端口）发送一个debug请求，然后客户端的 9000 端口响应这个请求，那么 debug 就开始了。 &amp;gt; 这里通知客户端其实有两种方式，根据 xdebug 的配置 xdebug.</description>
+    </item>
     
     <item>
       <title>提升你的编辑效率--vi</title>

@@ -8,14 +8,14 @@
     <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <meta name="description" content="介绍一下在 Linux 下常用的命令 source script.sh">
+    <meta name="description" content="简单总结一些 PHP xdebug 的工作原理，以及相关配置说明">
     
     <meta name="keyword"  content="郝培文, newiep, Newiep, 郝培文的博客, Newiep&#39;s Blog, 博客, 个人网站, 互联网, Web, PHP, Go, Golang, Mysql, Redis, 微服务">
     <link rel="shortcut icon" href="https://newiep.github.io/img/favicon.ico">
 
-    <title>source script.sh 和 ./script.sh 执行脚本有什么区别？-郝培文的博客 | Newiep&#39;s Blog</title>
+    <title>成为高级 PHP 程序员的第一步——调试（xdebug 原理篇）-郝培文的博客 | Newiep&#39;s Blog</title>
 
-    <link rel="canonical" href="https://newiep.github.io/post/2016-10-15-bash-command-source/">
+    <link rel="canonical" href="https://newiep.github.io/post/2017-07-13-debug-principle-for-php/">
 
     <link rel="stylesheet" href="https://newiep.github.io/css/iDisqus.min.css"/>
 	
@@ -121,14 +121,18 @@
                 <div class="post-heading">
                     <div class="tags">
                        
-                       <a class="tag" href="/tags/bash" title="bash">
-                           bash
+                       <a class="tag" href="/tags/xdebug" title="xdebug">
+                           xdebug
+                        </a>
+                        
+                       <a class="tag" href="/tags/php" title="php">
+                           php
                         </a>
                         
                     </div>
-                    <h1>source script.sh 和 ./script.sh 执行脚本有什么区别？</h1>
+                    <h1>成为高级 PHP 程序员的第一步——调试（xdebug 原理篇）</h1>
                     <h2 class="subheading"></h2>
-                    <span  class="meta">Posted by Newiep&#39;s Blog on Saturday, October 15, 2016
+                    <span  class="meta">Posted by Newiep&#39;s Blog on Thursday, July 13, 2017
                         
                     </span>
                 </div>
@@ -154,53 +158,60 @@
                 <header>
                 <h2>TOC</h2>
                 </header>
-                
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#先讲一下-xdebug-工作原理-总结为下面几个步骤">先讲一下 xdebug 工作原理，总结为下面几个步骤：</a></li>
+<li><a href="#以上就是整个工作流程-下面介绍一下两种通知客户端的方式">以上就是整个工作流程，下面介绍一下两种通知客户端的方式：</a>
+<ul>
+<li><a href="#第一种-静态绑定客户端-host">第一种，静态绑定客户端 host</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
 		
-		<blockquote>
-<p>source script.sh 和 ./script.sh 执行脚本有什么区别？</p>
-</blockquote>
+		
 
-<p>这里有一个回答
-<a href="http://superuser.com/questions/176783/what-is-the-difference-between-executing-a-bash-script-and-sourcing-a-bash-scrip">What is the difference between executing a bash script and sourcing a bash script?</a> 很详细，简单总结一下：</p>
+<p><a href="https://my.oschina.net/atanl/blog/371424">文章参考：Xdebug工作原理</a>
+xdebug 对于许多 phper 应该一点也不陌生。说来惭愧，对于常年使用  <code>var_dump</code>，<code>echo</code>，现在又多了一个<code>dd</code> :sweat_smile:  ，来调试程序的猿来说，这种方式实在有点过时。今天花了一些时间好好了解了一下，现在就整理一下这款，能提升你调试效率以及逼格满满的调试利器———— xdebug</p>
 
-<blockquote>
-<p>source script.sh 会在当前 shell 进程（当前环境上下文）执行，而./script.sh 则会新开一个 shell 进程来执行。举个例子：</p>
-</blockquote>
+<h3 id="先讲一下-xdebug-工作原理-总结为下面几个步骤">先讲一下 xdebug 工作原理，总结为下面几个步骤：</h3>
 
-<p>假设有以下的脚本pid.sh ：</p>
+<ol>
+<li><p>IDE（比如 PhpStorm ，下文所述的客户端）中已经集成了一个遵循 BGDp 的 Xdebug 插件。当要 debug 的时候，点击一些 IDE 的某个按钮，启动这个插件。该插件会启动一个 9000 的端口监听远程服务器发过来的 debug 信息。
+&gt; phpstorm 中，开启 / 关闭的位置为：工具栏 &gt; Run &gt; Start / Stop Listening for PHP Xdebug Connetions</p></li>
 
-<pre><code class="language-sh">#!/bin/sh
-echo $$
-</code></pre>
+<li><p>浏览器向 Httpd 服务器发送一个带有 XDEBUG_SESSION_START 参数的请求，服务器收到这个请求之后交给后端的PHP（已开启 xdebug 模块）进行处理。</p></li>
 
-<blockquote>
-<p><code>$$</code>会打印当前 shell进程的 pid</p>
-</blockquote>
+<li><p>Php 看到这个请求是带了 XDEBUG_SESSION_START 参数，就告诉 Xdebug，“嘿，我要debug喔，你准备一下”。这时，Xdebug 会向来源 ip 客户端的9000端口（默认是 9000 端口）发送一个debug请求，然后客户端的 9000 端口响应这个请求，那么 debug 就开始了。
+&gt; 这里通知客户端其实有两种方式，根据 xdebug 的配置 <code>xdebug.remote_connect_back = 0 | 1</code> 使用不同的通知方式，下文会详细介绍</p></li>
 
-<pre><code class="language-sh"># 先手动执行一下，看输出结果
-$ echo $$
-25009
+<li><p>Php 知道 Xdebug 已经准备好了，那么就开始开始一行一行的执行代码，但是每执行一行都会让 Xdebug 过滤一下，Xdebug 在过滤每一行代码的时候，都会暂停代码的执行，然后向客户端的 9000 端口发送该行代码的执行情况，等待客户端的决策（是一句代码还是下一个断点待）。。</p></li>
 
-# 使用 source 的方法执行，
-$ source pid.sh
-25009
+<li><p>相应，客户端（IDE）收到 Xdebug 发送过来的执行情况，就可以把这些信息展示给开发者看了，包括一些变量的值等。同时向 Xdebug 发送下一步应该什么。</p></li>
+</ol>
 
+<h3 id="以上就是整个工作流程-下面介绍一下两种通知客户端的方式">以上就是整个工作流程，下面介绍一下两种通知客户端的方式：</h3>
 
-# 直接执行 pid.sh，
-$ ./pid.sh
-25011
+<p>Xdebug 的官方文档给了两张很清楚的交互图</p>
 
+<h4 id="第一种-静态绑定客户端-host">第一种，静态绑定客户端 host</h4>
 
-# 重新使用 source 的方法，
-$ source pid.sh
-25009
+<p><code>xdebug.remote_connect_back = 0</code> ，也是 xdebug 的默认方式，这种情况下，xdebug 在收到调试通知时会读取配置 <code>xdebug.remote_host</code> 和 <code>xdebug.remote_port</code> ，默认是 localhost:9000，然后向这个端口发送通知
+ <img src="/images/xdebug-remote-connect1.gif" alt="file" />
+ &gt; 可以看到，<code>remote_host</code> 的 IP 是固定的，这种方式只适合单一客户端开发调试</p>
 
-</code></pre>
+<p>#### 第二种，不绑定 IP，根据请求来源通知
+  <code>xdebug.remote_connect_back = 1</code>，这种方式和上面基本相同，唯一不同的是，php 在 接受 http 请求后，xdebug 会将请求来源的 IP 绑定，并通知</p>
 
-<p>可以看到，<code>source pid.sh</code> 每次执行的结果都一样，都是当前 shell 进程的 pid， 而 <code>./pid.sh</code> 则每次都会新开一个 shell 进程。</p>
+<p><img src="/images/xdebug-remote-connect1.gif" alt="file" /></p>
 
 <blockquote>
-<p>note！！！ <code>./script.sh</code> 和 <code>. script.sh</code> 是不一样的，<code>.</code> 其实是 <code>source</code> 的一个别名（alias）</p>
+<p>以上就是所有 xdebug 工作原理相关的介绍，下一篇讲在 <code>homestead + phpstorm</code> 作为开发环境如何具体配置并使用 xdebug</p>
 </blockquote>
 
 
@@ -208,13 +219,9 @@ $ source pid.sh
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/post/2016-10-15-beauty-bash-prompt/" data-toggle="tooltip" data-placement="top" title="让你的终端命令行提示符更漂亮">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/post/2016-10-15-development-environment-by-vagrant/" data-toggle="tooltip" data-placement="top" title="使用 vagrant 快速搭建 php 开发环境">Next Post &rarr;</a>
+                        <a href="/post/2017-02-27-vi-high-level/" data-toggle="tooltip" data-placement="top" title="提升你的编辑效率--vi">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -362,7 +369,7 @@ $ source pid.sh
                     
                 </ul>
 		<p class="copyright text-muted">
-                    Copyright &copy; Newiep&#39;s Blog , 2016
+                    Copyright &copy; Newiep&#39;s Blog , 2017
                     <br>
                     <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
                     <iframe

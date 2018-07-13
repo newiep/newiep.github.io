@@ -8,14 +8,14 @@
     <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <meta name="description" content="介绍一下在 Linux 下常用的命令 source script.sh">
+    <meta name="description" content="郝培文，程序员, 开源爱好者 | 这里是 郝培文 的博客，与你一起发现更大的世界。">
     
     <meta name="keyword"  content="郝培文, newiep, Newiep, 郝培文的博客, Newiep&#39;s Blog, 博客, 个人网站, 互联网, Web, PHP, Go, Golang, Mysql, Redis, 微服务">
     <link rel="shortcut icon" href="https://newiep.github.io/img/favicon.ico">
 
-    <title>source script.sh 和 ./script.sh 执行脚本有什么区别？-郝培文的博客 | Newiep&#39;s Blog</title>
+    <title>Xdebug-郝培文的博客 | Newiep&#39;s Blog</title>
 
-    <link rel="canonical" href="https://newiep.github.io/post/2016-10-15-bash-command-source/">
+    <link rel="canonical" href="https://newiep.github.io/tags/xdebug/">
 
     <link rel="stylesheet" href="https://newiep.github.io/css/iDisqus.min.css"/>
 	
@@ -108,29 +108,14 @@
 
 
 
-
-<style type="text/css">
-    header.intro-header{
-        background-image: url('https://newiep.github.io/images/home-bg-jeep.jpg')
-    }
-</style>
-<header class="intro-header" >
+<header class="intro-header" style="background-image: url('https://newiep.github.io/images/home-bg-jeep.jpg')">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                       
-                       <a class="tag" href="/tags/bash" title="bash">
-                           bash
-                        </a>
-                        
-                    </div>
-                    <h1>source script.sh 和 ./script.sh 执行脚本有什么区别？</h1>
-                    <h2 class="subheading"></h2>
-                    <span  class="meta">Posted by Newiep&#39;s Blog on Saturday, October 15, 2016
-                        
-                    </span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Newiep&#39;s Blog </h1>
+                    
+		    <span class="subheading">Stay Foolish, Stay Hungry</span>
                 </div>
             </div>
         </div>
@@ -139,160 +124,129 @@
 
 
 
-
-<article>
-    <div class="container">
-        <div class="row">
-
+  
+<div class="container">
+    <div class="row">
+        
+        
+   	    <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container
+        ">
             
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
 
-		
-                <header>
-                <h2>TOC</h2>
-                </header>
-                
-		
-		<blockquote>
-<p>source script.sh 和 ./script.sh 执行脚本有什么区别？</p>
-</blockquote>
-
-<p>这里有一个回答
-<a href="http://superuser.com/questions/176783/what-is-the-difference-between-executing-a-bash-script-and-sourcing-a-bash-scrip">What is the difference between executing a bash script and sourcing a bash script?</a> 很详细，简单总结一下：</p>
-
-<blockquote>
-<p>source script.sh 会在当前 shell 进程（当前环境上下文）执行，而./script.sh 则会新开一个 shell 进程来执行。举个例子：</p>
-</blockquote>
-
-<p>假设有以下的脚本pid.sh ：</p>
-
-<pre><code class="language-sh">#!/bin/sh
-echo $$
-</code></pre>
-
-<blockquote>
-<p><code>$$</code>会打印当前 shell进程的 pid</p>
-</blockquote>
-
-<pre><code class="language-sh"># 先手动执行一下，看输出结果
-$ echo $$
-25009
-
-# 使用 source 的方法执行，
-$ source pid.sh
-25009
-
-
-# 直接执行 pid.sh，
-$ ./pid.sh
-25011
-
-
-# 重新使用 source 的方法，
-$ source pid.sh
-25009
-
-</code></pre>
-
-<p>可以看到，<code>source pid.sh</code> 每次执行的结果都一样，都是当前 shell 进程的 pid， 而 <code>./pid.sh</code> 则每次都会新开一个 shell 进程。</p>
-
-<blockquote>
-<p>note！！！ <code>./script.sh</code> 和 <code>. script.sh</code> 是不一样的，<code>.</code> 其实是 <code>source</code> 的一个别名（alias）</p>
-</blockquote>
-
-
-                <hr>
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/post/2016-10-15-beauty-bash-prompt/" data-toggle="tooltip" data-placement="top" title="让你的终端命令行提示符更漂亮">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/post/2016-10-15-development-environment-by-vagrant/" data-toggle="tooltip" data-placement="top" title="使用 vagrant 快速搭建 php 开发环境">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            
-<div id="disqus-comment"></div>
-
-
-
-            </div>
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                     
-                    
-                        
-                            <a href="/tags/bash" title="bash">
-                                bash
-                            </a>
-                        
-                    
-                        
-                            <a href="/tags/php" title="php">
-                                php
-                            </a>
-                        
-                    
-                        
-                            <a href="/tags/timezone" title="timezone">
-                                timezone
-                            </a>
-                        
-                    
-                        
-                            <a href="/tags/ubuntu" title="ubuntu">
-                                ubuntu
-                            </a>
-                        
-                    
-                        
-                            <a href="/tags/vagrant" title="vagrant">
-                                vagrant
-                            </a>
-                        
-                    
-                        
-                            <a href="/tags/vim" title="vim">
-                                vim
-                            </a>
-                        
-                    
-                        
-                            <a href="/tags/xdebug" title="xdebug">
-                                xdebug
-                            </a>
-                        
-                    
-                    </div>
-                </section>
-
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                </ul>
-            </div>
+<div class="post-preview">
+    <a href="https://newiep.github.io/post/2017-07-13-debug-principle-for-php/">
+        <h2 class="post-title">
+            成为高级 PHP 程序员的第一步——调试（xdebug 原理篇）
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            简单总结一些 PHP xdebug 的工作原理，以及相关配置说明
+        
         </div>
-    </div>
-</article>
+    </a>
+    <p class="post-meta">
+    Posted by Newiep&#39;s Blog Thursday, July 13, 2017
+    </p>
+</div>
+<hr>
+
+
+            
+
+
+
+       	</div>
+        
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+    
+
+    
+    <section class="visible-md visible-lg">
+        <hr><h5><a href="">ABOUT ME</a></h5>
+        <div class="short-about">
+            
+            
+           
+           <ul class="list-inline"> 
+               
+               <li>
+                   <a href="https://newiep.github.io/tags/xdebug/index.xml" rel="alternate" type="application/rss+xml" title="Newiep&#39;s Blog" >
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               <li>
+                   <a href="https://twitter.com/newiep_H">
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="https://newiep.github.io/images/WechatIMG.jpeg">
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-wechat fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/newiep">
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+                </ul>
+            </div>
+    </section>
+   
+   <hr>
+   <h5>FRIENDS</h5>
+   <ul class="list-inline">
+       
+   </ul>
+   
+    
+   <hr>
+   <h5>BOOKMARKS</h5>
+   <ul class="list-inline">
+   
+   </ul>
+</div>
+
+	</div>
+</div>
+
 
 
 
@@ -304,7 +258,7 @@ $ source pid.sh
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href="" rel="alternate" type="application/rss+xml" title="Newiep&#39;s Blog" >
+                       <a href="https://newiep.github.io/tags/xdebug/index.xml" rel="alternate" type="application/rss+xml" title="Newiep&#39;s Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -362,7 +316,7 @@ $ source pid.sh
                     
                 </ul>
 		<p class="copyright text-muted">
-                    Copyright &copy; Newiep&#39;s Blog , 2016
+                    Copyright &copy; Newiep&#39;s Blog , 2017
                     <br>
                     <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
                     <iframe
