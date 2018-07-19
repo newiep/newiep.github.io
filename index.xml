@@ -6,10 +6,28 @@
     <description>Recent content on 郝培文的博客 - Newiep&#39;s 脑容量拓展</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 13 Jul 2017 21:00:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Jun 2018 16:54:05 +0000</lastBuildDate>
     
 	<atom:link href="https://newiep.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>（转）Linux IO模式及 select、poll、epoll详解</title>
+      <link>https://newiep.github.io/post/2018-06-19-linux-io-detailed/</link>
+      <pubDate>Tue, 19 Jun 2018 16:54:05 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2018-06-19-linux-io-detailed/</guid>
+      <description>原文链接：Linux IO模式及 select、poll、epoll详解 一、概念说明 在进行解释之前，首先要说明几个概念： 用户空间和内核空间 进程切</description>
+    </item>
+    
+    <item>
+      <title>（译）理解 mysql 多版本控制（Mvcc）实现</title>
+      <link>https://newiep.github.io/post/2018-03-26-understanding-innodb-mvcc/</link>
+      <pubDate>Mon, 26 Mar 2018 20:55:05 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2018-03-26-understanding-innodb-mvcc/</guid>
+      <description>原文链接：Understanding InnoDB MVCC 多版本并发控制 (MVCC) 是一种能使关系性数据支持并发，或多个用户同时访问数据库数据的设计理念。 在 Mysql 的 InnoDB 存储引</description>
+    </item>
     
     <item>
       <title>成为高级 PHP 程序员的第一步——调试（xdebug 配置篇）</title>
@@ -36,6 +54,15 @@
       
       <guid>https://newiep.github.io/post/2017-02-27-vi-high-level/</guid>
       <description>常用插入模式 a 在当前位置后一个字符处进行插入 A 在当前行尾的处进行插入 i 在当前位置前一个字符处进行插入 I 在当前行首的位置进行插入 r 当前位置进行</description>
+    </item>
+    
+    <item>
+      <title>给自己制作的vagrant box 添加一个版本</title>
+      <link>https://newiep.github.io/post/2016-12-03-add-metadata-for-vagrantbox/</link>
+      <pubDate>Sat, 03 Dec 2016 10:36:00 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2016-12-03-add-metadata-for-vagrantbox/</guid>
+      <description>自己制作的 vagrant box，在执行vagrant add box 命令后是没有版本信息的（包括手动下载的官方的 box ），怎么才能给box 加上版本号呐！ 问题来源 Box &amp;lsquo;laravel/homestead&amp;rsquo; could not</description>
     </item>
     
     <item>

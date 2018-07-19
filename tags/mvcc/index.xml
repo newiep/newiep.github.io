@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mvcc on 郝培文的博客 - Newiep&#39;s 脑容量拓展</title>
+    <link>https://newiep.github.io/tags/mvcc/</link>
+    <description>Recent content in Mvcc on 郝培文的博客 - Newiep&#39;s 脑容量拓展</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 26 Mar 2018 20:55:05 +0000</lastBuildDate>
+    
+	<atom:link href="https://newiep.github.io/tags/mvcc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>（译）理解 mysql 多版本控制（Mvcc）实现</title>
+      <link>https://newiep.github.io/post/2018-03-26-understanding-innodb-mvcc/</link>
+      <pubDate>Mon, 26 Mar 2018 20:55:05 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2018-03-26-understanding-innodb-mvcc/</guid>
+      <description>原文链接：Understanding InnoDB MVCC 多版本并发控制 (MVCC) 是一种能使关系性数据支持并发，或多个用户同时访问数据库数据的设计理念。 在 Mysql 的 InnoDB 存储引</description>
+    </item>
+    
+  </channel>
+</rss>

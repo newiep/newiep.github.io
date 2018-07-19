@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>提升你的编辑效率--vi - 郝培文的博客 - Newiep&#39;s 脑容量拓展</title>
+  <title>（译）理解 mysql 多版本控制（Mvcc）实现 - 郝培文的博客 - Newiep&#39;s 脑容量拓展</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Newiep" /><meta name="description" content="记录 vi 一些常用的提升编辑效率的常用命令" />
+<meta name="author" content="Newiep" /><meta name="description" content="外国一篇关于 mysql 多版本控制（mvcc）下的问题" />
 
   <meta name="keywords" content="郝培文, newiep, Newiep, 郝培文的博客, Newiep&#39;s Blog, 博客, 个人网站, 互联网, Web, PHP, Go, Golang, Mysql, Redis, 微服务" />
 
@@ -28,7 +28,7 @@
 <meta name="generator" content="Hugo 0.43" />
 
 
-<link rel="canonical" href="https://newiep.github.io/post/2017-02-27-vi-high-level/" />
+<link rel="canonical" href="https://newiep.github.io/post/2018-03-26-understanding-innodb-mvcc/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -48,20 +48,16 @@
 
 
 
-<meta property="og:title" content="提升你的编辑效率--vi" />
-<meta property="og:description" content="记录 vi 一些常用的提升编辑效率的常用命令" />
+<meta property="og:title" content="（译）理解 mysql 多版本控制（Mvcc）实现" />
+<meta property="og:description" content="外国一篇关于 mysql 多版本控制（mvcc）下的问题" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://newiep.github.io/post/2017-02-27-vi-high-level/" />
+<meta property="og:url" content="https://newiep.github.io/post/2018-03-26-understanding-innodb-mvcc/" />
 
 
 
-<meta property="article:published_time" content="2017-02-27T20:55:05&#43;00:00"/>
+<meta property="article:published_time" content="2018-03-26T20:55:05&#43;00:00"/>
 
-<meta property="article:modified_time" content="2017-02-27T20:55:05&#43;00:00"/>
-
-
-
-
+<meta property="article:modified_time" content="2018-03-26T20:55:05&#43;00:00"/>
 
 
 
@@ -69,20 +65,24 @@
 
 
 
-<meta itemprop="name" content="提升你的编辑效率--vi">
-<meta itemprop="description" content="记录 vi 一些常用的提升编辑效率的常用命令">
-
-
-<meta itemprop="datePublished" content="2017-02-27T20:55:05&#43;00:00" />
-<meta itemprop="dateModified" content="2017-02-27T20:55:05&#43;00:00" />
-<meta itemprop="wordCount" content="569">
 
 
 
-<meta itemprop="keywords" content="vim," />
+
+<meta itemprop="name" content="（译）理解 mysql 多版本控制（Mvcc）实现">
+<meta itemprop="description" content="外国一篇关于 mysql 多版本控制（mvcc）下的问题">
+
+
+<meta itemprop="datePublished" content="2018-03-26T20:55:05&#43;00:00" />
+<meta itemprop="dateModified" content="2018-03-26T20:55:05&#43;00:00" />
+<meta itemprop="wordCount" content="873">
+
+
+
+<meta itemprop="keywords" content="mysql,innodb,mvcc," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="提升你的编辑效率--vi"/>
-<meta name="twitter:description" content="记录 vi 一些常用的提升编辑效率的常用命令"/>
+<meta name="twitter:title" content="（译）理解 mysql 多版本控制（Mvcc）实现"/>
+<meta name="twitter:description" content="外国一篇关于 mysql 多版本控制（mvcc）下的问题"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -145,10 +145,10 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">提升你的编辑效率--vi</h1>
+      <h1 class="post-title">（译）理解 mysql 多版本控制（Mvcc）实现</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2017-02-27 </span>
+        <span class="post-time"> 2018-03-26 </span>
         <div class="post-category">
             
               <a href="/categories/tech/"> Tech </a>
@@ -171,11 +171,8 @@
 <ul>
 <li>
 <ul>
-<li><a href="#常用插入模式">常用插入模式</a></li>
-<li><a href="#移动命令">移动命令</a></li>
-<li><a href="#特殊命令">特殊命令</a></li>
-<li><a href="#宏录制">宏录制</a></li>
-<li><a href="#visual-block-列操作">visual block 列操作</a></li>
+<li><a href="#情况说明">情况说明</a></li>
+<li><a href="#问题描述">问题描述</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -190,67 +187,100 @@
     <div class="post-content">
       
 
-<h3 id="常用插入模式">常用插入模式</h3>
+<p><a href="http://ronaldbradford.com/blog/understanding-innodb-mvcc-2009-07-15/">原文链接：Understanding InnoDB MVCC</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control">多版本并发控制</a> (MVCC) 是一种能使关系性数据支持并发，或多个用户同时访问数据库数据的设计理念。</p>
+
+<p>在 Mysql 的 InnoDB 存储引擎提供了 MVCC, 行级锁，ACID 以及其他一些功能。</p>
+
+<p>我对该数据库理论的理解为，在 MVCC 控制下，应该完全支持访问修改（例如 UPDATE）部分特殊数据。然而在 InnoDB 引擎下，我觉得是通过一定程度的互斥锁来实现的。</p>
+
+<p>为了理清记录这些情况，我去寻求 InnoDB 内部专家的一件像 Mark Callaghan，Percona 以及 InnoDB 的开发团队。我很乐意承认我不是一个精通 Mysql方方面面的专家，特别是我还没有详细阅读源码已经明白内部工作原理。</p>
+
+<h3 id="情况说明">情况说明</h3>
+
+<p>单表通过主键更新一定范围的行会被其他在同一张表类似的操作所阻塞，但每个查询的数据集实际上是唯一的。</p>
+
+<h3 id="问题描述">问题描述</h3>
+
+<pre><code>$ mysql -u -p test
+drop table if exists numbers;
+create table numbers (id int unsigned not null primary key, f1 int not null, f2 int not null) engine=innodb;
+
+delimiter $$
+
+drop procedure if exists fill_numbers $$
+create procedure fill_numbers(in p_max int)
+deterministic
+begin
+  declare counter int default 1;
+  truncate table numbers;
+  insert into numbers values (1,1,1);
+  while counter &lt; p_max
+  do
+      insert into numbers (id,f1, f2)
+          select id + counter, counter + f1, id - f2
+          from numbers;
+      select count(*) into counter from numbers;
+      select counter;
+  end while;
+end $$
+delimiter ;
+
+call fill_numbers(2000000);
+</code></pre>
+
+<p>我开了两个独立的线程在不同的主键范围内执行相同的语句。</p>
+
+<pre><code>--thread 1
+start transaction;
+update numbers
+set f2 = f2 +200
+where id between 1 and 1000000;
+commit;
+
+--thread 2
+start transaction;
+update numbers
+set f2 = f2 +300
+where id between 1000001 and 2000000;
+commit;
+</code></pre>
+
+<p>在第三个线程监控一下 InnoDB 内部的事务。</p>
+
+<pre><code>-- thread 3
+show engine innodb statusG
+</code></pre>
+
+<p>在更新过程中，看到了以下的错误。</p>
+
+<pre><code>---TRANSACTION 0 7741, ACTIVE 20 sec, process no 2159, OS thread id 1188534592 fetching rows, thread declared inside InnoDB 275
+mysql tables in use 1, locked 1
+2007 lock struct(s), heap size 292848, 1001862 row lock(s), undo log entries 999858
+MySQL thread id 918563, query id 16802707 localhost root Updating
+update numbers set f2 = f2 +300 where id between 1000001 and 2000000
+---TRANSACTION 0 7740, ACTIVE 21 sec, process no 2159, OS thread id 1178949952 fetching rows
+mysql tables in use 1, locked 1
+LOCK WAIT 2008 lock struct(s), heap size 292848, 1002005 row lock(s), undo log entries 1000000
+MySQL thread id 918564, query id 16802694 localhost root Updating
+update numbers set f2 = f2 +200 where id between 1 and 1000000
+------- TRX HAS BEEN WAITING 3 SEC FOR THIS LOCK TO BE GRANTED:
+RECORD LOCKS space id 0 page no 16052 n bits 568 index `PRIMARY` of table `test`.`numbers` trx id 0 7740 lock_mode X waiting
+Record lock, heap no 256 PHYSICAL RECORD: n_fields 5; compact format; info bits 0
+ 0: len 4; hex 000f4241; asc   BA;; 1: len 6; hex 000000001e3d; asc      =;; 2: len 7; hex 00000033630110; asc    3c  ;; 3: len 4; hex 800f4241; asc   BA;; 4: len 4; hex 80050584; asc     ;;
+</code></pre>
+
+<p>这个错误在 MySQL 多个不同的版本包括硬件平台被重现了，5.0.67, 5.0.81 and 5.1.25。</p>
+
+<p>导致这个问题的原因是什么？</p>
 
 <ul>
-<li><code>a</code>  在当前位置后一个字符处进行插入</li>
-<li><code>A</code>  在当前行尾的处进行插入</li>
-<li><code>i</code>    在当前位置前一个字符处进行插入</li>
-<li><code>I</code>    在当前行首的位置进行插入</li>
-<li><code>r</code>   当前位置进行替换</li>
-<li><code>o</code>  在当前行后插入一个新行</li>
-<li><code>O</code>  在当前行前插入一个新行</li>
-<li><code>C</code>  删除从当前位置到行尾内容</li>
-<li><code>S</code> 或 <code>cc</code>  删除当前行内容并进入插入模式</li>
+<li>是一个 bug ？ 不是。</li>
+<li>我理解的 MVCC 理论是错误的？有可能。</li>
+<li>在 InnoDB 引擎下 MVCC 没有完全实现？不是，Heikki 和 他的团队比大多数的数据库专家对数据理论有更深入的理解</li>
+<li>是 Mysql 的内核干扰了 InnoDB 存储引擎？不是，</li>
 </ul>
-
-<h3 id="移动命令">移动命令</h3>
-
-<ul>
-<li><code>hjkl</code>   前，下，上，右</li>
-<li><code>^</code>  移动到行首，<code>数字0</code> 到行头</li>
-<li><code>$</code> 移动到行尾</li>
-<li><code>gg</code> 移动到第一行， <code>NG</code> 移动到第 N 行，  <code>G</code> 移动到最后一行</li>
-<li><code>w</code> 移动到下一个单词开头  <code>b</code> 移动到下一个单词结尾（如果已 blank 字符作为分割，使用大写的<code>WE</code>）</li>
-<li><code>%</code> 匹配括号移动，包括<code>(</code>， <code>[</code>，  <code>{</code>  （需要把光标先移到括号上）</li>
-<li><code>*</code>(<code>#</code>)    移动到<code>下</code>(<code>上</code>)下一个当前光标所在的单词</li>
-<li><code>f{char}</code>    查找并移动到下一个{char}字符位置</li>
-<li><code>;</code>  重复上一个查找动作</li>
-</ul>
-
-<h3 id="特殊命令">特殊命令</h3>
-
-<ul>
-<li><code>gU(u)</code> 变大(小)写，需要接一个范围，比如，<code>gUl</code> 大写当前字符， <code>guu</code> 当前行全部变小写  <code>gUw</code>  当前位置到改单词末尾变为大写</li>
-<li><code>v</code> visual 模式 ，  <code>V</code> visual line 模式，  <code>ctrl + v</code>  区块（visual block）模式，也可以理解为<code>列模式</code></li>
-<li><code>qa</code> 开始录制    <code>q</code> 退出录制
-<img src="/storage/vi-recording-visualblock-example.gif" alt="vi-recording-visualblock-example.gif" /></li>
-</ul>
-
-<p>上面演示了使用<code>录制功能</code>和 <code>visual block</code> 的示例。
-具体操作：</p>
-
-<h3 id="宏录制">宏录制</h3>
-
-<ol>
-<li><code>qa</code> 开启录制</li>
-<li><code>Yp</code> 复制当前有数字1的行并粘贴</li>
-<li><code>ctrl + a</code> 当前数字 +1</li>
-<li><code>q</code> 停止录制</li>
-<li><code>@a</code> replay被录制的宏</li>
-<li><code>@@</code> replay最新录制的宏</li>
-<li><code>6@@</code> replay 6次</li>
-</ol>
-
-<h3 id="visual-block-列操作">visual block 列操作</h3>
-
-<ol>
-<li><code>ctrl + v</code> 开始列操作, <code>G</code> 选中到最后一行</li>
-<li><code>I ，</code> 在选中的列前开始插入 <code>,</code></li>
-<li><code>ESC</code> 执行，为10行全部插入 <code>,</code></li>
-<li><code>V</code> 开启 visual 模式，<code>G</code> 选中到最后一列</li>
-<li><code>J</code> 把所有行连接到一起</li>
-</ol>
 
     </div>
 
@@ -262,7 +292,7 @@
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2017-02-27</span>
+    <span class="item-content">2018-03-26</span>
   </p>
   
   
@@ -274,21 +304,25 @@
     <footer class="post-footer">
       <div class="post-tags">
           
-          <a href="/tags/vim/">vim</a>
+          <a href="/tags/mysql/">mysql</a>
+          
+          <a href="/tags/innodb/">innodb</a>
+          
+          <a href="/tags/mvcc/">mvcc</a>
           
         </div>
 
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/2017-07-13-debug-principle-for-php/">
+          <a class="prev" href="/post/2018-06-19-linux-io-detailed/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">成为高级 PHP 程序员的第一步——调试（xdebug 原理篇）</span>
+            <span class="prev-text nav-default">（转）Linux IO模式及 select、poll、epoll详解</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         
-          <a class="next" href="/post/2016-12-03-add-metadata-for-vagrantbox/">
-            <span class="next-text nav-default">给自己制作的vagrant box 添加一个版本</span>
+          <a class="next" href="/post/2017-07-13-debug-practice-for-php/">
+            <span class="next-text nav-default">成为高级 PHP 程序员的第一步——调试（xdebug 配置篇）</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
