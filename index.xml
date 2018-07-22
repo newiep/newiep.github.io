@@ -6,10 +6,19 @@
     <description>Recent content on 郝培文的博客 - Newiep&#39;s 脑容量拓展</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 19 Jun 2018 16:54:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Jul 2018 16:54:05 +0000</lastBuildDate>
     
 	<atom:link href="https://newiep.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>常见算法 PHP 实现 -- 堆排序</title>
+      <link>https://newiep.github.io/post/2018-07-22-heap-sort/</link>
+      <pubDate>Sat, 21 Jul 2018 16:54:05 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/post/2018-07-22-heap-sort/</guid>
+      <description>什么是堆 通俗点讲，堆（英语：Heap）是具有以下性质的完全二叉树，任意节点小于（或大于）它的左右子节点，最小值（或大值）在根元素位置。我们称</description>
+    </item>
     
     <item>
       <title>（转）Linux IO模式及 select、poll、epoll详解</title>

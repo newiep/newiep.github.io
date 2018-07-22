@@ -6,10 +6,19 @@
     <description>Recent content in Tags on 郝培文的博客 - Newiep&#39;s 脑容量拓展</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 15 Oct 2016 14:51:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Jul 2018 16:54:05 +0000</lastBuildDate>
     
 	<atom:link href="https://newiep.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Algorithm</title>
+      <link>https://newiep.github.io/tags/algorithm/</link>
+      <pubDate>Sat, 21 Jul 2018 16:54:05 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/tags/algorithm/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Bash</title>
@@ -17,6 +26,15 @@
       <pubDate>Sat, 15 Oct 2016 14:51:00 +0000</pubDate>
       
       <guid>https://newiep.github.io/tags/bash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Heap</title>
+      <link>https://newiep.github.io/tags/heap/</link>
+      <pubDate>Sat, 21 Jul 2018 16:54:05 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/tags/heap/</guid>
       <description></description>
     </item>
     
@@ -71,6 +89,15 @@
       <pubDate>Thu, 13 Jul 2017 21:00:05 +0000</pubDate>
       
       <guid>https://newiep.github.io/tags/php/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sort</title>
+      <link>https://newiep.github.io/tags/sort/</link>
+      <pubDate>Sat, 21 Jul 2018 16:54:05 +0000</pubDate>
+      
+      <guid>https://newiep.github.io/tags/sort/</guid>
       <description></description>
     </item>
     
